@@ -133,6 +133,7 @@
     </Compile>
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\IEventRepository.cs" />
+    <Compile Include="Models\StaticEventRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

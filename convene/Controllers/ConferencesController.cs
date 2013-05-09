@@ -8,7 +8,7 @@ namespace convene.Controllers
     {
         private IEventRepository repo;
 
-        public ConferencesController()
+        public ConferencesController() : this(new StaticEventRepository())
         {
         }
 
