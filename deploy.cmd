@@ -124,7 +124,7 @@ IF !ERRORLEVEL! NEQ 0 goto error
 
 :: 3. Run nunit tests
 echo Running unit tests against "%DEPLOYMENT_TEST_DIR%\bin\Release\%DEPLOYMENT_TEST_PROJECT%.dll"
-call %GALLIO_COMMAND% %GALLIO_ARGS% "%DEPLOYMENT_TEST_DIR%\bin\Release\%DEPLOYMENT_TEST_PROJECT%.dll"
+"%GALLIO_COMMAND%" %GALLIO_ARGS% "%DEPLOYMENT_TEST_DIR%\bin\Release\%DEPLOYMENT_TEST_PROJECT%.dll"
 IF !ERRORLEVEL! NEQ 0 goto error
 
 :: 2. KuduSync
