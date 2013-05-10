@@ -47,6 +47,28 @@ IF NOT DEFINED KUDU_SYNC_COMMAND (
   SET KUDU_SYNC_COMMAND=node "%appdata%\npm\node_modules\kuduSync\bin\kuduSync"
 )
 
+IF NOT DEFINED GALLIO_COMMAND (
+  IF NOT EXIST "%appdata%\Gallio\bin\Gallio.Echo.exe" (
+    :: Downloading unzip
+    echo Downloading unzip
+    curl -O http://stahlforce.com/dev/unzip.exe
+    IF !ERRORLEVEL! NEQ 0 goto error
+
+    :: Downloading Gallio
+    echo Downloading Gallio
+    curl -O http://mb-unit.googlecode.com/files/GallioBundle-3.4.14.0.zip
+    IF !ERRORLEVEL! NEQ 0 goto error
+
+    :: Extracting Gallio
+    echo Extracting Gallio
+    unzip -q -n GallioBundle-3.4.14.0.zip -d %appdata%\Gallio
+    IF !ERRORLEVEL! NEQ 0 goto error
+  )
+
+  :: Set Gallio runner path
+  SET GALLIO_COMMAND=%appdata%\Gallio\bin\Gallio.Echo.exe
+)
+
 IF NOT DEFINED NUNIT_COMMAND (
   SET NUNIT_COMMAND=%DEPLOYMENT_SOURCE%\packages\NUnit.Runners.2.6.2\tools\nunit-console.exe
 )
@@ -98,7 +120,7 @@ IF !ERRORLEVEL! NEQ 0 goto error
 
 :: 3. Run nunit tests
 echo Running unit tests against "%DEPLOYMENT_TEST_DIR%\bin\Release\%DEPLOYMENT_TEST_PROJECT%.dll"
-"%NUNIT_COMMAND%" "%DEPLOYMENT_TEST_DIR%\bin\Release\%DEPLOYMENT_TEST_PROJECT%.dll" %NUNIT_ARGS%
+"%GALLIO_COMMAND%" "%DEPLOYMENT_TEST_DIR%\bin\Release\%DEPLOYMENT_TEST_PROJECT%.dll" %NUNIT_ARGS%
 IF !ERRORLEVEL! NEQ 0 goto error
 
 :: 2. KuduSync
