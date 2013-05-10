@@ -69,6 +69,10 @@ IF NOT DEFINED GALLIO_COMMAND (
   SET GALLIO_COMMAND=%appdata%\Gallio\bin\Gallio.Echo.exe
 )
 
+IF NOT DEFINED GALLIO_ARGS (
+  SET GALLIO_ARGS=/no-logo
+)
+
 IF NOT DEFINED NUNIT_COMMAND (
   SET NUNIT_COMMAND=%DEPLOYMENT_SOURCE%\packages\NUnit.Runners.2.6.2\tools\nunit-console.exe
 )
@@ -120,7 +124,7 @@ IF !ERRORLEVEL! NEQ 0 goto error
 
 :: 3. Run nunit tests
 echo Running unit tests against "%DEPLOYMENT_TEST_DIR%\bin\Release\%DEPLOYMENT_TEST_PROJECT%.dll"
-"%GALLIO_COMMAND%" "%DEPLOYMENT_TEST_DIR%\bin\Release\%DEPLOYMENT_TEST_PROJECT%.dll" %NUNIT_ARGS%
+call %GALLIO_COMMAND% %GALLIO_ARGS% "%DEPLOYMENT_TEST_DIR%\bin\Release\%DEPLOYMENT_TEST_PROJECT%.dll"
 IF !ERRORLEVEL! NEQ 0 goto error
 
 :: 2. KuduSync
